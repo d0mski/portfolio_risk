@@ -13,10 +13,6 @@ currday = currdate.day
 currdate = str(currdate)
 
 lastdate = str(lastyear) + "-" + str(currmonth) + "-" + str(currday)
-# print(lastdate)
-# print(currdate)
-# print(type(currdate))
-# print(type(lastdate))
 
 #Access RobinHood
 username = input("Enter your RobinHood username: ")

@@ -4,6 +4,19 @@ import numpy as np
 import robin_stocks as r
 import getpass
 from yahoofinancials import YahooFinancials
+import datetime
+
+currdate = datetime.date.today()
+lastyear = currdate.year - 1
+currmonth = currdate.month
+currday = currdate.day
+currdate = str(currdate)
+
+lastdate = str(lastyear) + "-" + str(currmonth) + "-" + str(currday)
+# print(lastdate)
+# print(currdate)
+# print(type(currdate))
+# print(type(lastdate))
 
 #Access RobinHood
 username = input("Enter your RobinHood username: ")
@@ -49,7 +62,7 @@ portfolio_beta = sum((stocknewinfo/stock_sum) * stockvar)
 # Gather more portfolio and market return data
 
 riskfreerate = .0156
-x = YahooFinancials("^GSPC").get_historical_price_data('2019-01-29','2020-01-29','monthly')
+x = YahooFinancials("^GSPC").get_historical_price_data(lastdate,currdate,'monthly')
 
 for y in x['^GSPC']['prices'][:-11]:
     startprice = y['close']

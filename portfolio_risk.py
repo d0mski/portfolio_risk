@@ -1,7 +1,7 @@
 #Packages
 import pandas as pd
 import numpy as np
-import robin_stocks as r
+import robin_stocks.robinhood as r
 import getpass
 from yahoofinancials import YahooFinancials
 import datetime
@@ -15,7 +15,7 @@ currdate = str(currdate)
 lastdate = str(lastyear) + "-" + str(currmonth) + "-" + str(currday)
 
 #Access RobinHood
-username = input("Enter your RobinHood username: ")
+username = input("Enter your RobinHood email: ")
 password = getpass.getpass("Enter your RobinHood password: ")
 login = r.login(username,password)
 
@@ -76,10 +76,10 @@ expected_ror = riskfreerate + portfolio_beta * (market_return - riskfreerate)
 stocksreturn = []
 
 for ticker in row_names:
-    pastprice = r.get_historicals(ticker, 'year')
+    pastprice = r.get_stock_historicals(ticker, interval='week', span='year')
     pastprice = pd.DataFrame(pastprice)
     pastpriceamt = pastprice['close_price'].astype('float').values[0]
-    currprice = r.get_historicals(ticker,'day')
+    currprice = r.get_stock_historicals(ticker, interval='day')
     currprice = pd.DataFrame(currprice)
     currpriceamt = currprice['close_price'].astype('float').values[0]
     stock_return = (currpriceamt - pastpriceamt) / pastpriceamt
@@ -96,5 +96,5 @@ weightedval = sum((stocknewinfo/stock_sum) * newreturnval)
 
 portfolio_alpha = weightedval - expected_ror
 
-print('Your portfolio alpha is: ' + str(portfolio_alpha))
-print('Your portfolio beta is: ' + str(portfolio_beta))
+print('Your portfolio alpha is: ' + str(round(portfolio_alpha, 3)))
+print('Your portfolio beta is: ' + str(round(portfolio_beta, 3)))
